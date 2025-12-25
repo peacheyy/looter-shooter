@@ -1,5 +1,6 @@
 using UnityEngine;
 using LooterShooter.Player;
+using LooterShooter.Item;
 
 namespace LooterShooter.Enemy
 {
@@ -74,6 +75,7 @@ namespace LooterShooter.Enemy
         private void Die()
         {
             Debug.Log($"{gameObject.name} died!");
+            Item.Item.SpawnAt(transform.position);
             Destroy(gameObject);
         }
     }

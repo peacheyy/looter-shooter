@@ -16,15 +16,21 @@ namespace LooterShooter.Player
         [SerializeField] private float jumpHeight = 1.5f;
 
         [Header("Mouse Look")]
-        [SerializeField] private float mouseSensitivity = 100f;
+        [SerializeField] private float mouseSensitivity = 0.35f;
         [SerializeField] private float maxLookAngle = 85f;
-        [SerializeField] private Transform cameraTransform;
 
         private CharacterController _controller;
         private InputSystem_Actions _input;
         private Vector3 _velocity;
-        private float _cameraPitch;
+        private float _yaw;
+        private float _pitch;
         private bool _jumpPressed;
+
+        private Vector2 _moveInput;
+        private bool _sprintHeld;
+
+        public float Yaw => _yaw;
+        public float Pitch => _pitch;
 
         private void Awake()
         {
@@ -35,18 +41,11 @@ namespace LooterShooter.Player
         private void OnEnable()
         {
             _input.Enable();
-            _input.Player.Jump.performed += OnJump;
         }
 
         private void OnDisable()
         {
-            _input.Player.Jump.performed -= OnJump;
             _input.Disable();
-        }
-
-        private void OnJump(UnityEngine.InputSystem.InputAction.CallbackContext context)
-        {
-            _jumpPressed = true;
         }
 
         private void Start()
@@ -54,63 +53,53 @@ namespace LooterShooter.Player
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
-            if (cameraTransform == null)
-            {
-                cameraTransform = Camera.main?.transform;
-            }
+            _yaw = transform.eulerAngles.y;
         }
 
         private void Update()
         {
             HandleMouseLook();
+
+            if (_input.Player.Jump.WasPressedThisFrame())
+            {
+                _jumpPressed = true;
+            }
+
+            _moveInput = _input.Player.Move.ReadValue<Vector2>();
+            _sprintHeld = _input.Player.Sprint.IsPressed();
+
             HandleMovement();
         }
 
         private void HandleMouseLook()
         {
-            if (cameraTransform == null) return;
-
             Vector2 lookInput = _input.Player.Look.ReadValue<Vector2>();
 
-            // Multiply by deltaTime for frame-rate independent look
-            float mouseX = lookInput.x * mouseSensitivity * Time.deltaTime;
-            float mouseY = lookInput.y * mouseSensitivity * Time.deltaTime;
+            _yaw += lookInput.x * mouseSensitivity;
+            _pitch -= lookInput.y * mouseSensitivity;
+            _pitch = Mathf.Clamp(_pitch, -maxLookAngle, maxLookAngle);
 
-            // Horizontal rotation (rotate the player body)
-            transform.Rotate(Vector3.up, mouseX);
-
-            // Vertical rotation (rotate the camera)
-            _cameraPitch -= mouseY;
-            _cameraPitch = Mathf.Clamp(_cameraPitch, -maxLookAngle, maxLookAngle);
-            cameraTransform.localRotation = Quaternion.Euler(_cameraPitch, 0f, 0f);
+            transform.rotation = Quaternion.Euler(0f, _yaw, 0f);
         }
 
         private void HandleMovement()
         {
-            // Ground check
             bool isGrounded = _controller.isGrounded;
             if (isGrounded && _velocity.y < 0f)
             {
-                _velocity.y = -2f; // Small downward force to keep grounded
+                _velocity.y = -2f;
             }
 
-            // Read input directly from wrapper class
-            Vector2 moveInput = _input.Player.Move.ReadValue<Vector2>();
-            bool sprintHeld = _input.Player.Sprint.IsPressed();
-
-            // Calculate movement direction
-            float currentSpeed = sprintHeld ? sprintSpeed : walkSpeed;
-            Vector3 move = transform.right * moveInput.x + transform.forward * moveInput.y;
+            float currentSpeed = _sprintHeld ? sprintSpeed : walkSpeed;
+            Vector3 move = transform.right * _moveInput.x + transform.forward * _moveInput.y;
             _controller.Move(move * (currentSpeed * Time.deltaTime));
 
-            // Jumping
             if (_jumpPressed && isGrounded)
             {
                 _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 _jumpPressed = false;
             }
 
-            // Apply gravity
             _velocity.y += gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
         }
