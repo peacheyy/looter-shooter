@@ -1,17 +1,13 @@
 using UnityEngine;
+using TMPro;
 
 namespace LooterShooter.Player
 {
-    public interface IInteractable
-    {
-        string GetInteractPrompt();
-        void Interact();
-    }
-
     public class PlayerInteraction : MonoBehaviour
     {
         [SerializeField] private float interactRange = 3f;
         [SerializeField] private Transform cameraTransform;
+        [SerializeField] private TextMeshProUGUI interactPromptText;
 
         private InputSystem_Actions _inputActions;
         private IInteractable _currentInteractable;
@@ -50,6 +46,8 @@ namespace LooterShooter.Player
                 _currentInteractable.Interact();
                 _currentInteractable = null;
             }
+
+            UpdatePromptUI();
         }
 
         private void CheckForInteractable()
@@ -66,24 +64,18 @@ namespace LooterShooter.Player
             }
         }
 
-        private void OnGUI()
+        private void UpdatePromptUI()
         {
+            if (interactPromptText == null) return;
+
             if (_currentInteractable != null)
             {
-                string prompt = _currentInteractable.GetInteractPrompt();
-                GUIStyle style = new GUIStyle(GUI.skin.label)
-                {
-                    fontSize = 24,
-                    alignment = TextAnchor.MiddleCenter,
-                    normal = { textColor = Color.white }
-                };
-
-                float width = 300;
-                float height = 50;
-                float x = (Screen.width - width) / 2;
-                float y = Screen.height * 0.6f;
-
-                GUI.Label(new Rect(x, y, width, height), prompt, style);
+                interactPromptText.text = _currentInteractable.GetInteractPrompt();
+                interactPromptText.gameObject.SetActive(true);
+            }
+            else
+            {
+                interactPromptText.gameObject.SetActive(false);
             }
         }
     }

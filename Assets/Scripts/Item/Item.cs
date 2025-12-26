@@ -3,7 +3,7 @@ using LooterShooter.Player;
 
 namespace LooterShooter.Item
 {
-    public class Item : MonoBehaviour, IInteractable
+    public class Item : MonoBehaviour, LooterShooter.IInteractable
     {
         [SerializeField] private float glowIntensity = 2f;
         [SerializeField] private float bobSpeed = 2f;

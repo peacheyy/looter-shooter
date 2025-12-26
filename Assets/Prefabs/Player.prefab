@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 4343475324458546251}
   - component: {fileID: 4213210118006159018}
   - component: {fileID: 1975773865531867158}
+  - component: {fileID: 4938608210433861106}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -396,6 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.PlayerInteraction
   interactRange: 3
   cameraTransform: {fileID: 5499704337380774713}
+  interactPromptText: {fileID: 0}
 --- !u!114 &4213210118006159018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -420,4 +422,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02e3477b91aa383b4b572fbfde5b7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.UI.InventoryUI
-  showInventory: 0
+  inventoryPanel: {fileID: 0}
+  headerText: {fileID: 0}
+  itemsText: {fileID: 0}
+--- !u!114 &4938608210433861106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492084836184454313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 107bfc3fa2caac9a78964474a8e2a309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.PlayerReference

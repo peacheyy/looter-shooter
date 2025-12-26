@@ -1,5 +1,4 @@
 using UnityEngine;
-using LooterShooter.Player;
 
 namespace LooterShooter.Weapons
 {

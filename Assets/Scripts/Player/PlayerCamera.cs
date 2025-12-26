@@ -15,16 +15,12 @@ namespace LooterShooter.Player
 
         private void Start()
         {
-            if (target == null)
+            if (target == null && PlayerReference.Instance != null)
             {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                if (player != null)
-                {
-                    target = player.transform;
-                    _playerMovement = player.GetComponent<PlayerMovement>();
-                }
+                target = PlayerReference.Instance.Transform;
+                _playerMovement = PlayerReference.Instance.GameObject.GetComponent<PlayerMovement>();
             }
-            else
+            else if (target != null)
             {
                 _playerMovement = target.GetComponent<PlayerMovement>();
             }

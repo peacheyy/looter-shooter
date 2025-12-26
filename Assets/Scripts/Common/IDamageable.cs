@@ -1,4 +1,4 @@
-namespace LooterShooter.Player
+namespace LooterShooter
 {
     public interface IDamageable
     {

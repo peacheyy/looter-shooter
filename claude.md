@@ -13,10 +13,12 @@ This is a 3D Unity game development project.
 ```
 Assets/
 ├── Scripts/
+│   ├── Common/       # Shared interfaces (IDamageable, IInteractable, PlayerReference)
 │   ├── Player/       # Movement, camera, weapon, interaction, inventory
 │   ├── Enemy/        # Enemy AI and health
 │   ├── Item/         # Pickups and item data
-│   └── UI/           # Inventory display
+│   ├── Weapons/      # Weapon system and projectiles
+│   └── UI/           # Inventory display, weapon UI, crosshair
 ├── Scenes/           # Scene1.unity (main scene)
 ├── Settings/         # URP rendering configuration
 ├── Input/            # InputSystem_Actions (new input system)
@@ -31,11 +33,11 @@ Assets/
 - Inventory system (Tab to toggle, tracks items by type)
 
 ## Architecture Patterns
-- **Namespaces:** LooterShooter.Player, LooterShooter.Enemy, LooterShooter.Item, LooterShooter.UI
-- **Singleton:** Inventory.Instance for global access
-- **Interfaces:** IDamageable (combat), IInteractable (pickups)
-- **Tag-based discovery:** "Player" tag for enemy/camera references (consider ScriptableObject reference pattern if magic strings become error-prone or scope expands)
-- **Event system:** Inventory.OnInventoryChanged for UI updates
+- **Namespaces:** LooterShooter (root for shared), LooterShooter.Player, LooterShooter.Enemy, LooterShooter.Item, LooterShooter.UI, LooterShooter.Weapons
+- **Singleton:** Inventory.Instance for global access, PlayerReference.Instance for player access
+- **Interfaces:** IDamageable (combat), IInteractable (pickups) - both in root LooterShooter namespace
+- **Player discovery:** Use PlayerReference.Instance instead of tag-based lookups
+- **Event system:** Inventory.OnInventoryChanged, Weapon events (OnFire, OnReload, OnAmmoChanged) for UI updates
 - **Future consideration:** Migrate Singleton to ScriptableObject-based architecture if scope expands beyond single-player (co-op, unit testing, multiple inventories)
 
 ## Development Guidelines
@@ -52,6 +54,34 @@ Assets/
 - Use object pooling for frequently instantiated objects
 - Implement proper cleanup in OnDestroy()
 - Use layers and tags appropriately for organization
+
+### Critical Design Rules (MUST FOLLOW)
+
+**1. NEVER use OnGUI() for UI rendering**
+- OnGUI is deprecated, slow, and creates garbage every frame
+- ALWAYS use Canvas + TextMeshPro for all UI elements
+- Reference: WeaponUI.cs for the correct pattern
+
+**2. NEVER use FindGameObjectWithTag() or GameObject.Find()**
+- These are fragile (magic strings) and slow
+- Use PlayerReference.Instance for player access
+- For other objects, use SerializeField references or events
+- If you need global access, create a singleton like PlayerReference
+
+**3. Shared interfaces go in root namespace**
+- Interfaces used across multiple domains (IDamageable, IInteractable) belong in `LooterShooter` namespace
+- Place them in `Assets/Scripts/Common/`
+- Domain-specific interfaces stay in their domain namespace
+
+**4. Use event-driven UI updates**
+- UI components subscribe to events, not poll state
+- Use C# events (Action, Action<T>) for loose coupling
+- Always unsubscribe in OnDestroy()
+
+**5. Cache frequently accessed references**
+- Cache Camera.main in Awake/Start
+- Cache component references (GetComponent calls)
+- Never call GetComponent in Update loops
 
 ### Common Patterns
 - Use ScriptableObjects for shared data and configuration

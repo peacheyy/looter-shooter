@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 using LooterShooter.Player;
 using LooterShooter.Item;
 
@@ -7,70 +8,70 @@ namespace LooterShooter.UI
 {
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] private bool showInventory = true;
+        [SerializeField] private GameObject inventoryPanel;
+        [SerializeField] private TextMeshProUGUI headerText;
+        [SerializeField] private TextMeshProUGUI itemsText;
 
         private Inventory _inventory;
+        private bool _showInventory = true;
 
         private void Start()
         {
             _inventory = Inventory.Instance;
+
+            if (_inventory != null)
+            {
+                _inventory.OnInventoryChanged += UpdateUI;
+            }
+
+            UpdateUI();
+        }
+
+        private void OnDestroy()
+        {
+            if (_inventory != null)
+            {
+                _inventory.OnInventoryChanged -= UpdateUI;
+            }
         }
 
         private void Update()
         {
             if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
             {
-                showInventory = !showInventory;
+                _showInventory = !_showInventory;
+                UpdateVisibility();
             }
         }
 
-        private void OnGUI()
+        private void UpdateVisibility()
         {
-            if (!showInventory || _inventory == null) return;
+            if (inventoryPanel != null)
+            {
+                inventoryPanel.SetActive(_showInventory);
+            }
+        }
 
-            float padding = 10f;
-            float width = 200f;
-            float lineHeight = 25f;
+        private void UpdateUI()
+        {
+            if (_inventory == null || itemsText == null) return;
 
             var items = _inventory.GetAllItems();
-            float height = Mathf.Max(60f, (items.Count + 1) * lineHeight + padding * 2);
-
-            Rect boxRect = new Rect(padding, padding, width, height);
-
-            GUI.Box(boxRect, "");
-
-            GUIStyle headerStyle = new GUIStyle(GUI.skin.label)
-            {
-                fontSize = 16,
-                fontStyle = FontStyle.Bold,
-                normal = { textColor = Color.white }
-            };
-
-            GUIStyle itemStyle = new GUIStyle(GUI.skin.label)
-            {
-                fontSize = 14,
-                normal = { textColor = Color.white }
-            };
-
-            float y = padding + 5f;
-
-            GUI.Label(new Rect(padding + 10f, y, width - 20f, lineHeight), "INVENTORY", headerStyle);
-            y += lineHeight;
 
             if (items.Count == 0)
             {
-                itemStyle.normal.textColor = Color.gray;
-                GUI.Label(new Rect(padding + 10f, y, width - 20f, lineHeight), "Empty", itemStyle);
+                itemsText.text = "<color=#888888>Empty</color>";
             }
             else
             {
+                var sb = new System.Text.StringBuilder();
                 foreach (var kvp in items)
                 {
                     Color itemColor = ItemData.GetDefaultColor(kvp.Key);
-                    itemStyle.normal.textColor = itemColor;
-                    GUI.Label(new Rect(padding + 10f, y, width - 20f, lineHeight), $"{kvp.Key}: {kvp.Value}", itemStyle);
-                    y += lineHeight;
+                    string hexColor = ColorUtility.ToHtmlStringRGB(itemColor);
+                    sb.AppendLine($"<color=#{hexColor}>{kvp.Key}: {kvp.Value}</color>");
                 }
+                itemsText.text = sb.ToString().TrimEnd();
             }
         }
     }

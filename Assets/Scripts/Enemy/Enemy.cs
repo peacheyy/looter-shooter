@@ -1,5 +1,4 @@
 using UnityEngine;
-using LooterShooter.Player;
 using LooterShooter.Item;
 
 namespace LooterShooter.Enemy
@@ -27,10 +26,9 @@ namespace LooterShooter.Enemy
 
         private void Start()
         {
-            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-            if (playerObj != null)
+            if (PlayerReference.Instance != null)
             {
-                _player = playerObj.transform;
+                _player = PlayerReference.Instance.Transform;
             }
         }
 
