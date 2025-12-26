@@ -6,20 +6,37 @@ This is a 3D Unity game development project.
 - **Unity Version:** 6000.3.2f1 (Unity 6)
 - **Project Type:** 3D
 - **Team Size:** Solo developer
-- **Status:** Brand new project
+- **Status:** Early prototype - core mechanics implemented
+- **Genre:** First-person looter shooter
 
 ## Project Structure
 ```
 Assets/
-├── Scripts/          # C# scripts for game logic
-├── Scenes/           # Unity scene files
-├── Prefabs/          # Reusable game objects
-├── Materials/        # Materials and shaders
-├── Textures/         # Texture assets
-├── Audio/            # Sound effects and music
-├── Animations/       # Animation clips and controllers
-└── Resources/        # Runtime-loaded assets
+├── Scripts/
+│   ├── Player/       # Movement, camera, weapon, interaction, inventory
+│   ├── Enemy/        # Enemy AI and health
+│   ├── Item/         # Pickups and item data
+│   └── UI/           # Inventory display
+├── Scenes/           # Scene1.unity (main scene)
+├── Settings/         # URP rendering configuration
+├── Input/            # InputSystem_Actions (new input system)
+└── [Empty: Prefabs, Resources, Animations, Audio, Materials, Textures]
 ```
+
+## Implemented Features
+- First-person movement (WASD, sprint, jump, mouse look)
+- Raycast-based shooting with fire rate limiting
+- Enemy AI (follows player, takes damage, drops loot)
+- Item system (random loot, bobbing/glowing pickups, E to interact)
+- Inventory system (Tab to toggle, tracks items by type)
+
+## Architecture Patterns
+- **Namespaces:** LooterShooter.Player, LooterShooter.Enemy, LooterShooter.Item, LooterShooter.UI
+- **Singleton:** Inventory.Instance for global access
+- **Interfaces:** IDamageable (combat), IInteractable (pickups)
+- **Tag-based discovery:** "Player" tag for enemy/camera references (consider ScriptableObject reference pattern if magic strings become error-prone or scope expands)
+- **Event system:** Inventory.OnInventoryChanged for UI updates
+- **Future consideration:** Migrate Singleton to ScriptableObject-based architecture if scope expands beyond single-player (co-op, unit testing, multiple inventories)
 
 ## Development Guidelines
 
