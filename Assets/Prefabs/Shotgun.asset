@@ -10,27 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a88bcd0fa01675eb598e6e38df0330a7, type: 3}
-  m_Name: Pistol
+  m_Name: Shotgun
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Weapons.WeaponData
-  weaponName: Pistol
+  weaponName: Shotgun
   weaponType: 1
   icon: {fileID: 0}
-  weaponPrefab: {fileID: 7905161596061704232, guid: 6ccbb072a1c7ee0d3aec2c9aefbb9ea1, type: 3}
-  damage: 15
-  headshotMultiplier: 2
+  weaponPrefab: {fileID: 2538836254751893963, guid: 1d8db9f219c668c29abf4964cb21160b, type: 3}
+  damage: 10
+  headshotMultiplier: 1.5
   fireMode: 0
-  fireRate: 5
+  fireRate: 1.5
   burstCount: 1
-  burstDelay: 0.05
-  range: 100
-  magazineSize: 12
-  reloadTime: 1.5
+  burstDelay: 0
+  range: 35
+  magazineSize: 7
+  reloadTime: 2.5
   baseSpread: 0
-  maxSpread: 5
+  maxSpread: 2
   spreadIncreasePerShot: 0.5
-  spreadRecoveryRate: 5
-  pelletsPerShot: 8
-  pelletSpread: 5
+  spreadRecoveryRate: 3
+  pelletsPerShot: 10
+  pelletSpread: 6
   projectilePrefab: {fileID: 4209196491668400931, guid: b2ffaea59c830e221b9a69c59b715b5c, type: 3}
   projectileSpeed: 50
   fireSound: {fileID: 0}

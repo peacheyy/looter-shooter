@@ -138,10 +138,10 @@ namespace LooterShooter.Weapons
         {
             return type switch
             {
-                WeaponType.Hitscan => obj.AddComponent<HitscanWeapon>(),
                 WeaponType.Projectile => obj.AddComponent<ProjectileWeapon>(),
-                WeaponType.Shotgun => obj.AddComponent<ShotgunWeapon>(),
-                _ => obj.AddComponent<HitscanWeapon>()
+                WeaponType.Shotgun => obj.AddComponent<ProjectileShotgunWeapon>(),
+                WeaponType.Sniper => obj.AddComponent<SniperWeapon>(),
+                _ => obj.AddComponent<ProjectileWeapon>()
             };
         }
 

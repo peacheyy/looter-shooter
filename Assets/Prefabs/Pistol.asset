@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a88bcd0fa01675eb598e6e38df0330a7, type: 3}
+  m_Name: Pistol
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Weapons.WeaponData
+  weaponName: Pistol
+  weaponType: 1
+  icon: {fileID: 0}
+  weaponPrefab: {fileID: 7905161596061704232, guid: 6ccbb072a1c7ee0d3aec2c9aefbb9ea1, type: 3}
+  damage: 15
+  headshotMultiplier: 2
+  fireMode: 0
+  fireRate: 5
+  burstCount: 1
+  burstDelay: 0
+  range: 100
+  magazineSize: 12
+  reloadTime: 1.5
+  baseSpread: 0
+  maxSpread: 5
+  spreadIncreasePerShot: 0.5
+  spreadRecoveryRate: 5
+  pelletsPerShot: 8
+  pelletSpread: 5
+  projectilePrefab: {fileID: 4209196491668400931, guid: b2ffaea59c830e221b9a69c59b715b5c, type: 3}
+  projectileSpeed: 50
+  hasScope: 0
+  scopedFOV: 20
+  scopeSpeed: 0
+  fireSound: {fileID: 0}
+  reloadSound: {fileID: 0}
+  emptySound: {fileID: 0}
+  muzzleFlashPrefab: {fileID: 0}

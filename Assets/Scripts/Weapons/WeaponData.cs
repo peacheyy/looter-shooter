@@ -4,9 +4,9 @@ namespace LooterShooter.Weapons
 {
     public enum WeaponType
     {
-        Hitscan,
         Projectile,
-        Shotgun
+        Shotgun,
+        Sniper
     }
 
     public enum FireMode
@@ -55,6 +55,11 @@ namespace LooterShooter.Weapons
         [Header("Projectile Settings")]
         public GameObject projectilePrefab;
         public float projectileSpeed = 50f;
+
+        [Header("Scope Settings")]
+        public bool hasScope = false;
+        public float scopedFOV = 20f;
+        public float scopeSpeed = 0f; // 0 = instant
 
         [Header("Audio/Visual")]
         public AudioClip fireSound;

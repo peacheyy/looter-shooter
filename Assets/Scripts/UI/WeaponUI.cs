@@ -8,6 +8,7 @@ namespace LooterShooter.UI
     {
         [SerializeField] private WeaponManager weaponManager;
         [SerializeField] private TextMeshProUGUI reloadText;
+        [SerializeField] private TextMeshProUGUI ammoText;
 
         private Weapon _currentWeapon;
 
@@ -66,20 +67,32 @@ namespace LooterShooter.UI
 
         private void UpdateUI()
         {
-            if (_currentWeapon == null || reloadText == null) return;
+            if (_currentWeapon == null) return;
 
-            if (_currentWeapon.IsReloading)
+            if (reloadText != null)
             {
-                ShowText("Reloading...");
+                if (_currentWeapon.IsReloading)
+                {
+                    ShowText("Reloading...");
+                }
+                else if (_currentWeapon.CurrentAmmo <= 0)
+                {
+                    ShowText("Reload");
+                }
+                else
+                {
+                    HideText();
+                }
             }
-            else if (_currentWeapon.CurrentAmmo <= 0)
-            {
-                ShowText("Reload");
-            }
-            else
-            {
-                HideText();
-            }
+
+            UpdateAmmoDisplay();
+        }
+
+        private void UpdateAmmoDisplay()
+        {
+            if (ammoText == null || _currentWeapon == null) return;
+
+            ammoText.text = $"{_currentWeapon.CurrentAmmo} / {_currentWeapon.Data.magazineSize}";
         }
 
         private void OnReloadStarted()
