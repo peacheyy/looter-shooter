@@ -5,45 +5,42 @@ namespace LooterShooter.Enemy
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
+        [Header("Health")]
         [SerializeField] private float maxHealth = 50f;
+
+        [Header("Behavior Tree Settings")]
         [SerializeField] private float moveSpeed = 3f;
-        [SerializeField] private float stoppingDistance = 1.5f;
+        [SerializeField] private float chaseRange = 15f;
+        [SerializeField] private float attackRange = 2f;
+        [SerializeField] private float attackDamage = 10f;
+        [SerializeField] private float attackCooldown = 1.5f;
+        [SerializeField] private float patrolRadius = 5f;
+        [SerializeField] private float patrolWaitTime = 2f;
 
         private float _currentHealth;
         private Renderer _renderer;
         private Color _originalColor;
-        private Transform _player;
+
+        public Vector3 SpawnPosition { get; private set; }
+
+        // Properties for behavior tree blackboard
+        public float MoveSpeed => moveSpeed;
+        public float ChaseRange => chaseRange;
+        public float AttackRange => attackRange;
+        public float AttackDamage => attackDamage;
+        public float AttackCooldown => attackCooldown;
+        public float PatrolRadius => patrolRadius;
+        public float PatrolWaitTime => patrolWaitTime;
 
         private void Awake()
         {
             _currentHealth = maxHealth;
+            SpawnPosition = transform.position;
+
             _renderer = GetComponent<Renderer>();
             if (_renderer != null)
             {
                 _originalColor = _renderer.material.color;
-            }
-        }
-
-        private void Start()
-        {
-            if (PlayerReference.Instance != null)
-            {
-                _player = PlayerReference.Instance.Transform;
-            }
-        }
-
-        private void Update()
-        {
-            if (_player == null) return;
-
-            Vector3 direction = _player.position - transform.position;
-            direction.y = 0;
-            float distance = direction.magnitude;
-
-            if (distance > stoppingDistance)
-            {
-                transform.position += direction.normalized * moveSpeed * Time.deltaTime;
-                transform.rotation = Quaternion.LookRotation(direction);
             }
         }
 

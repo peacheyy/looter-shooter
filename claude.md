@@ -94,6 +94,75 @@ Assets/
 - Focus on clean, readable code over complex patterns initially
 - Refactor as patterns emerge naturally during development
 
+## Unity Behavior Package
+
+This project uses **Unity Behavior** for AI behavior trees. Scripts are in `Assets/Scripts/Enemy/BehaviorTree/`.
+
+### Creating Conditions vs Actions
+
+**Conditions** (for branching logic):
+```csharp
+using System;
+using Unity.Behavior;
+using UnityEngine;
+
+[Serializable, Unity.Properties.GeneratePropertyBag]
+[Condition(name: "My Condition", story: "[Agent] checks something", category: "Conditions", id: "unique-guid-here")]
+public partial class MyCondition : Condition
+{
+    [SerializeReference] public BlackboardVariable<GameObject> Agent;
+
+    public override bool IsTrue() { return true; }
+    public override void OnStart() { }
+    public override void OnEnd() { }
+}
+```
+
+**Actions** (for executing behavior):
+```csharp
+using System;
+using Unity.Behavior;
+using UnityEngine;
+using Unity.Properties;
+using Action = Unity.Behavior.Action;
+
+[Serializable, GeneratePropertyBag]
+[NodeDescription(name: "My Action", story: "[Agent] does something", category: "Action/Enemy", id: "unique-guid-here")]
+public partial class MyAction : Action
+{
+    [SerializeReference] public BlackboardVariable<GameObject> Agent;
+
+    protected override Status OnStart() { return Status.Running; }
+    protected override Status OnUpdate() { return Status.Success; }
+    protected override void OnEnd() { }
+}
+```
+
+**Key differences:**
+- Conditions use `[Condition(...)]` attribute, Actions use `[NodeDescription(...)]`
+- Conditions return `bool` via `IsTrue()`, Actions return `Status` enum
+- Both need `using LooterShooter;` to access `PlayerReference` and `IDamageable`
+
+### Enemy Behavior Tree Structure
+
+Standard enemy AI pattern using Selector (Try In Order):
+```
+Start (Repeat)
+└── Try In Order (Selector) - runs first successful branch
+    ├── [1] Attack Branch (highest priority, smallest range)
+    │   └── Conditional Guard (CheckPlayerInRange → AttackRange)
+    │       └── Attack Player Action
+    │
+    ├── [2] Chase Branch (medium priority)
+    │   └── Conditional Guard (CheckPlayerInRange → ChaseRange)
+    │       └── Chase Player Action
+    │
+    └── [3] Idle/Patrol Branch (fallback when player out of range)
+        └── Wait or Patrol Action
+```
+
+**Important:** Attack check must come BEFORE chase (higher priority = checked first).
+
 ## File Handling
 - Scene files (.unity) and prefabs (.prefab) are binary - avoid editing directly
 - Meta files are auto-generated - include in version control
