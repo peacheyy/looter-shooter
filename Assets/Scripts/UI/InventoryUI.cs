@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 using LooterShooter.Player;
 using LooterShooter.Item;
@@ -13,7 +12,6 @@ namespace LooterShooter.UI
         [SerializeField] private TextMeshProUGUI itemsText;
 
         private Inventory _inventory;
-        private bool _showInventory = true;
 
         private void Start()
         {
@@ -32,23 +30,6 @@ namespace LooterShooter.UI
             if (_inventory != null)
             {
                 _inventory.OnInventoryChanged -= UpdateUI;
-            }
-        }
-
-        private void Update()
-        {
-            if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
-            {
-                _showInventory = !_showInventory;
-                UpdateVisibility();
-            }
-        }
-
-        private void UpdateVisibility()
-        {
-            if (inventoryPanel != null)
-            {
-                inventoryPanel.SetActive(_showInventory);
             }
         }
 

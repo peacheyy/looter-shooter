@@ -1,4 +1,5 @@
 using UnityEngine;
+using LooterShooter.Item;
 
 namespace LooterShooter.Weapons
 {
@@ -22,6 +23,7 @@ namespace LooterShooter.Weapons
         [Header("Basic Info")]
         public string weaponName;
         public WeaponType weaponType;
+        public WeaponSlot weaponSlot = WeaponSlot.Primary;
         public Sprite icon;
         public GameObject weaponPrefab;
 
