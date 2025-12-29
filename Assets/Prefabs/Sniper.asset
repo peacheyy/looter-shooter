@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Weapons.WeaponData
   weaponName: Sniper
   weaponType: 2
-  weaponSlot: 2
   icon: {fileID: 0}
   weaponPrefab: {fileID: 893086590874083686, guid: 6810e4eba1c9287bca88a7b986f36070, type: 3}
   damage: 100

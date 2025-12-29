@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Weapons.WeaponData
   weaponName: Shotgun
   weaponType: 1
-  weaponSlot: 1
   icon: {fileID: 0}
   weaponPrefab: {fileID: 2538836254751893963, guid: 1d8db9f219c668c29abf4964cb21160b, type: 3}
   damage: 10
@@ -34,9 +33,6 @@ MonoBehaviour:
   pelletSpread: 6
   projectilePrefab: {fileID: 4209196491668400931, guid: b2ffaea59c830e221b9a69c59b715b5c, type: 3}
   projectileSpeed: 50
-  hasScope: 0
-  scopedFOV: 20
-  scopeSpeed: 0
   fireSound: {fileID: 0}
   reloadSound: {fileID: 0}
   emptySound: {fileID: 0}

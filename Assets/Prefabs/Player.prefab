@@ -204,7 +204,6 @@ GameObject:
   - component: {fileID: 4213210118006159018}
   - component: {fileID: 1975773865531867158}
   - component: {fileID: 4938608210433861106}
-  - component: {fileID: 8261025178182074591}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -438,15 +437,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107bfc3fa2caac9a78964474a8e2a309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.PlayerReference
---- !u!114 &8261025178182074591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6492084836184454313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a952f65a2457373abe4c4c486867d55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.EquipmentInventory
