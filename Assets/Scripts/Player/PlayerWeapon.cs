@@ -1,43 +1,21 @@
 using UnityEngine;
-using LooterShooter.Weapons;
 
 namespace LooterShooter.Player
 {
-    [RequireComponent(typeof(WeaponManager))]
+    /// <summary>
+    /// Player weapon component - provides access to WeaponHandler.
+    /// WeaponHandler now handles input directly, so this is mainly for external access.
+    /// </summary>
+    [RequireComponent(typeof(WeaponHandler))]
     public class PlayerWeapon : MonoBehaviour
     {
-        private WeaponManager _weaponManager;
-        private InputSystem_Actions _input;
+        private WeaponHandler _weaponHandler;
 
-        public WeaponManager WeaponManager => _weaponManager;
+        public WeaponHandler WeaponHandler => _weaponHandler;
 
         private void Awake()
         {
-            _weaponManager = GetComponent<WeaponManager>();
-            _input = new InputSystem_Actions();
-        }
-
-        private void OnEnable()
-        {
-            _input.Enable();
-        }
-
-        private void OnDisable()
-        {
-            _input.Disable();
-        }
-
-        private void OnDestroy()
-        {
-            _input?.Dispose();
-        }
-
-        private void Update()
-        {
-            if (_input.Player.Reload.WasPressedThisFrame())
-            {
-                _weaponManager.Reload();
-            }
+            _weaponHandler = GetComponent<WeaponHandler>();
         }
     }
 }

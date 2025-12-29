@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191356b5cc6441c1c819c03bb3a36b8d, type: 3}
+  m_Name: Weapon_Shotgun
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Weapons.WeaponEquipmentData
+  itemName: Shotgun
+  description: A common special weapon.
+  icon: {fileID: 0}
+  slotType: 2
+  rarity: 0
+  glowColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  weaponData: {fileID: 11400000, guid: 2f4283360573fc5deaba47bf14a6c959, type: 2}

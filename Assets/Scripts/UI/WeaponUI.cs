@@ -1,12 +1,13 @@
 using UnityEngine;
 using TMPro;
 using LooterShooter.Weapons;
+using LooterShooter.Player;
 
 namespace LooterShooter.UI
 {
     public class WeaponUI : MonoBehaviour
     {
-        [SerializeField] private WeaponManager weaponManager;
+        [SerializeField] private WeaponHandler weaponHandler;
         [SerializeField] private TextMeshProUGUI reloadText;
         [SerializeField] private TextMeshProUGUI ammoText;
 
@@ -14,18 +15,18 @@ namespace LooterShooter.UI
 
         private void Start()
         {
-            if (weaponManager == null)
+            if (weaponHandler == null)
             {
-                weaponManager = FindFirstObjectByType<WeaponManager>();
+                weaponHandler = FindFirstObjectByType<WeaponHandler>();
             }
 
-            if (weaponManager != null)
+            if (weaponHandler != null)
             {
-                weaponManager.OnWeaponChanged += HandleWeaponChanged;
+                weaponHandler.OnWeaponChanged += HandleWeaponChanged;
 
-                if (weaponManager.CurrentWeapon != null)
+                if (weaponHandler.CurrentWeapon != null)
                 {
-                    HandleWeaponChanged(weaponManager.CurrentWeapon);
+                    HandleWeaponChanged(weaponHandler.CurrentWeapon);
                 }
             }
 
@@ -34,9 +35,9 @@ namespace LooterShooter.UI
 
         private void OnDestroy()
         {
-            if (weaponManager != null)
+            if (weaponHandler != null)
             {
-                weaponManager.OnWeaponChanged -= HandleWeaponChanged;
+                weaponHandler.OnWeaponChanged -= HandleWeaponChanged;
             }
 
             UnsubscribeFromWeapon();

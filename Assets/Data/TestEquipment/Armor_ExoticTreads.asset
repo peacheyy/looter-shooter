@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ba3c87cce2be3603ba927bcac611b43, type: 3}
+  m_Name: Armor_ExoticTreads
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Item.ArmorData
+  itemName: Exotic Treads
+  description: A exotic boots armor piece.
+  icon: {fileID: 0}
+  slotType: 7
+  rarity: 4
+  glowColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}

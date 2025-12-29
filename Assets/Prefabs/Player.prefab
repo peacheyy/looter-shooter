@@ -199,11 +199,11 @@ GameObject:
   - component: {fileID: 815729757884019717}
   - component: {fileID: 7963088585240282960}
   - component: {fileID: 6706158222663060644}
-  - component: {fileID: 1660146535464799820}
   - component: {fileID: 4343475324458546251}
   - component: {fileID: 4213210118006159018}
-  - component: {fileID: 1975773865531867158}
   - component: {fileID: 4938608210433861106}
+  - component: {fileID: 6274133882346783355}
+  - component: {fileID: 6812279303005353345}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -367,22 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49c286d0af82764209d40f36cde84c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.PlayerWeapon
---- !u!114 &1660146535464799820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6492084836184454313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdfce0f650ca45a6a93424ed77405adb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Weapons.WeaponManager
-  weaponHolder: {fileID: 4654507800883629466}
-  cameraTransform: {fileID: 5499704337380774713}
-  startingWeapons:
-  - {fileID: 11400000, guid: 645b5b15485b9c2f48d5751e95c84a4f, type: 2}
 --- !u!114 &4343475324458546251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,21 +394,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30854f99f0edefb99542685a6983359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.Inventory
---- !u!114 &1975773865531867158
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6492084836184454313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02e3477b91aa383b4b572fbfde5b7c73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.UI.InventoryUI
-  inventoryPanel: {fileID: 0}
-  headerText: {fileID: 0}
-  itemsText: {fileID: 0}
 --- !u!114 &4938608210433861106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -437,3 +406,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 107bfc3fa2caac9a78964474a8e2a309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.PlayerReference
+--- !u!114 &6274133882346783355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492084836184454313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28b27da0fd56f9b508185b7c73ce9e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.WeaponHandler
+  weaponHolder: {fileID: 4654507800883629466}
+  cameraTransform: {fileID: 5499704337380774713}
+--- !u!114 &6812279303005353345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492084836184454313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5062256d15edbef05b1f933573e42fd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.EquipmentManager
+  backpackCapacity: 20
