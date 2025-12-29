@@ -5,7 +5,7 @@ using Unity.Properties;
 using LooterShooter;
 using LooterShooter.Enemy;
 
-[Serializable, Unity.Properties.GeneratePropertyBag]
+[Serializable, GeneratePropertyBag]
 [Condition(name: "Check Player In Range", story: "[Agent] is within [Range] of player", category: "Conditions", id: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")]
 public partial class CheckPlayerInRange : Condition
 {
