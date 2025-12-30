@@ -41,6 +41,7 @@ namespace LooterShooter.Player
         private int _airJumpsRemaining;
         private bool _wasGrounded;
 
+        private bool _controlsEnabled = true;
         private bool _isDashing;
         private float _dashTimeRemaining;
         private float _dashCooldownRemaining;
@@ -48,6 +49,18 @@ namespace LooterShooter.Player
 
         public float Yaw => _yaw;
         public float Pitch => _pitch;
+        public bool ControlsEnabled => _controlsEnabled;
+
+        public void SetControlsEnabled(bool enabled)
+        {
+            _controlsEnabled = enabled;
+            if (!enabled)
+            {
+                _velocity = Vector3.zero;
+                _moveInput = Vector2.zero;
+                _isDashing = false;
+            }
+        }
 
         private void Awake()
         {
@@ -75,6 +88,8 @@ namespace LooterShooter.Player
 
         private void Update()
         {
+            if (!_controlsEnabled) return;
+
             HandleMouseLook();
 
             if (_input.Player.Jump.WasPressedThisFrame())
