@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 4938608210433861106}
   - component: {fileID: 6274133882346783355}
   - component: {fileID: 6812279303005353345}
+  - component: {fileID: 8974859056602992974}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -433,3 +434,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.EquipmentManager
   backpackCapacity: 20
+--- !u!114 &8974859056602992974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6492084836184454313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3010046be286e46649471b696bdbb372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Player.PlayerHealth
+  maxHealth: 100
