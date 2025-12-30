@@ -12,6 +12,7 @@ public partial class PickRandomPatrolPointAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<float> PatrolRadius;
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
+    [SerializeReference] public BlackboardVariable<bool> Is3DPatrol;
 
     protected override Status OnStart()
     {
@@ -20,8 +21,16 @@ public partial class PickRandomPatrolPointAction : Action
         var enemy = Agent.Value.GetComponent<Enemy>();
         Vector3 centerPosition = enemy != null ? enemy.SpawnPosition : Agent.Value.transform.position;
 
-        Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * PatrolRadius.Value;
-        TargetPosition.Value = centerPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
+        if (Is3DPatrol.Value)
+        {
+            Vector3 randomSphere = UnityEngine.Random.insideUnitSphere * PatrolRadius.Value;
+            TargetPosition.Value = centerPosition + randomSphere;
+        }
+        else
+        {
+            Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * PatrolRadius.Value;
+            TargetPosition.Value = centerPosition + new Vector3(randomCircle.x, 0, randomCircle.y);
+        }
 
         return Status.Success;
     }

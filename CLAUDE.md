@@ -10,9 +10,9 @@
 
 ```
 Assets/Scripts/
-├── Common/       # Shared interfaces (IDamageable, IInteractable, PlayerReference)
+├── Common/       # Shared interfaces (IDamageable, IInteractable, ILocomotion, PlayerReference)
 ├── Player/       # Movement, camera, weapon, interaction, inventory
-├── Enemy/        # Enemy AI, health, BehaviorTree/
+├── Enemy/        # Enemy AI, health, locomotion, BehaviorTree/
 ├── Item/         # Pickups and item data
 ├── Weapons/      # Weapon system and projectiles
 └── UI/           # Inventory display, weapon UI, crosshair
@@ -43,6 +43,43 @@ Assets/Scripts/
 - **Namespaces:** `LooterShooter` (root), `LooterShooter.Player`, `LooterShooter.Enemy`, `LooterShooter.Item`, `LooterShooter.UI`, `LooterShooter.Weapons`
 - **Singletons:** `Inventory.Instance`, `PlayerReference.Instance`
 - **Events:** `Inventory.OnInventoryChanged`, `Weapon.OnFire`, `Weapon.OnReload`, `Weapon.OnAmmoChanged`
+
+## Locomotion System
+
+Enemy movement is handled by locomotion components that implement `ILocomotion`. Behavior tree actions delegate movement to these components.
+
+### Interface
+
+```csharp
+public interface ILocomotion
+{
+    bool HasArrived { get; }
+    bool IsMoving { get; }
+    float Speed { get; set; }
+    float StoppingDistance { get; set; }
+    void SetDestination(Vector3 destination);  // Move to static point
+    void SetTarget(Transform target);          // Track moving target
+    void Stop();
+}
+```
+
+### Locomotion Types
+
+| Component | Use Case | Movement |
+|-----------|----------|----------|
+| `GroundLocomotion` | Ground enemies | XZ plane only, instant rotation |
+| `FlyingLocomotion` | Flying enemies | Full 3D, smooth rotation |
+
+### Enemy Setup
+
+```
+Enemy GameObject
+├── Enemy (component)
+├── GroundLocomotion OR FlyingLocomotion (component)
+└── BehaviorGraphAgent (component)
+```
+
+Movement speed and stopping distance are configured on the locomotion component, not in the behavior tree.
 
 ## Unity Behavior Package
 
@@ -85,13 +122,14 @@ public partial class MyAction : Action
 
 | Action | Purpose | Blackboard Vars |
 |--------|---------|-----------------|
-| `MoveToPositionAction` | Moves agent to target | TargetPosition, Speed, StoppingDistance |
+| `MoveToPositionAction` | Moves agent to static point (uses ILocomotion) | TargetPosition |
+| `ChasePlayerAction` | Chases player, tracks live position (uses ILocomotion) | ChaseRange |
 | `FaceTargetAction` | Rotates to face target | TargetPosition |
-| `PickRandomPatrolPointAction` | Picks random point | PatrolRadius, TargetPosition (out) |
+| `PickRandomPatrolPointAction` | Picks random point | PatrolRadius, TargetPosition (out), Is3DPatrol |
 | `WaitAction` | Waits for duration | Duration |
 | `DealDamageAction` | Deals damage to player | Damage |
-| `SetTargetToPlayerAction` | Sets target to player | TargetPosition (out) |
-| `CheckPlayerInRange` | Condition: in range | Range |
+| `SetTargetToPlayerAction` | Sets target to player position (one-time) | TargetPosition (out) |
+| `CheckPlayerInRange` | Condition: player in range | Range |
 
 ### Behavior Tree Structure
 
@@ -101,12 +139,14 @@ Start (Repeat)
     ├── Attack Branch (CheckPlayerInRange → AttackRange)
     │   └── Sequence: SetTargetToPlayer → FaceTarget → DealDamage
     ├── Chase Branch (CheckPlayerInRange → ChaseRange)
-    │   └── Sequence: SetTargetToPlayer → FaceTarget → MoveToPosition
+    │   └── ChasePlayer (tracks player live, stops if out of range)
     └── Patrol Branch (fallback)
-        └── Sequence: PickRandomPatrolPoint → FaceTarget → MoveToPosition → Wait
+        └── Sequence: PickRandomPatrolPoint → MoveToPosition → Wait
 ```
 
 Attack must come BEFORE chase (higher priority = checked first).
+
+**Note:** Use `Abort If` nodes to interrupt lower-priority branches when higher-priority conditions become true. Do NOT use `Restart If` (causes spinning).
 
 ## File Handling
 
