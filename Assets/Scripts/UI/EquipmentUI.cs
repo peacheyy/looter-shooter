@@ -106,6 +106,10 @@ namespace LooterShooter.UI
                 inventoryPanel.SetActive(true);
             }
 
+            // Disable player controls
+            var playerMovement = PlayerReference.Instance?.GameObject.GetComponent<PlayerMovement>();
+            playerMovement?.SetControlsEnabled(false);
+
             // Unlock cursor for UI interaction
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -123,6 +127,10 @@ namespace LooterShooter.UI
             {
                 inventoryPanel.SetActive(false);
             }
+
+            // Re-enable player controls
+            var playerMovement = PlayerReference.Instance?.GameObject.GetComponent<PlayerMovement>();
+            playerMovement?.SetControlsEnabled(true);
 
             // Lock cursor for gameplay
             Cursor.lockState = CursorLockMode.Locked;

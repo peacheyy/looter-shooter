@@ -253,6 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Enemy.Enemy
   maxHealth: 100
+  lootTable: {fileID: 11400000, guid: b53896f41abbc2122b912aa0cdb870c6, type: 2}
 --- !u!65 &31838158
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1270,6 +1271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Enemy.Enemy
   maxHealth: 100
+  lootTable: {fileID: 11400000, guid: b53896f41abbc2122b912aa0cdb870c6, type: 2}
 --- !u!65 &580471604
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2358,6 +2360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Enemy.Enemy
   maxHealth: 100
+  lootTable: {fileID: 11400000, guid: b53896f41abbc2122b912aa0cdb870c6, type: 2}
 --- !u!65 &956701841
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3065,6 +3068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Enemy.Enemy
   maxHealth: 100
+  lootTable: {fileID: 11400000, guid: b53896f41abbc2122b912aa0cdb870c6, type: 2}
 --- !u!65 &1193636983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4075,6 +4079,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 6812279303005353345, guid: 7776a3b94921617e183d4fdf47668301, type: 3}
+      propertyPath: starterEquipment.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6812279303005353345, guid: 7776a3b94921617e183d4fdf47668301, type: 3}
+      propertyPath: 'starterEquipment.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50c209168b23385218591180f6a84738, type: 2}
     - target: {fileID: 7963088585240282960, guid: 7776a3b94921617e183d4fdf47668301, type: 3}
       propertyPath: sprintSpeed
       value: 9
@@ -4165,6 +4177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Enemy.Enemy
   maxHealth: 100
+  lootTable: {fileID: 11400000, guid: b53896f41abbc2122b912aa0cdb870c6, type: 2}
 --- !u!65 &1712482436
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4591,6 +4604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Enemy.Enemy
   maxHealth: 100
+  lootTable: {fileID: 11400000, guid: b53896f41abbc2122b912aa0cdb870c6, type: 2}
 --- !u!65 &1973138684
 BoxCollider:
   m_ObjectHideFlags: 0

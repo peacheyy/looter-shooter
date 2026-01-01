@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6073f7514450610b52f4f3fc09c68d, type: 3}
+  m_Name: LootTable
+  m_EditorClassIdentifier: Assembly-CSharp::LooterShooter.Item.LootTable
+  possibleDrops:
+  - equipment: {fileID: 11400000, guid: 8e23833f0ff936b12bd9afb442924359, type: 2}
+    dropChance: 15
+  - equipment: {fileID: 11400000, guid: b415a4214cdfeb491a9e20ee1cd5e72e, type: 2}
+    dropChance: 15
+  - equipment: {fileID: 11400000, guid: 286535e98e45a92a3a9a222a24b21270, type: 2}
+    dropChance: 12
+  - equipment: {fileID: 11400000, guid: 71a9994c05d0e4213906b01761b07842, type: 2}
+    dropChance: 12
+  - equipment: {fileID: 11400000, guid: 1150adf377849601ab17e399c649bda7, type: 2}
+    dropChance: 12
+  - equipment: {fileID: 11400000, guid: 0bd727f4a6d1bedf7b4a31152566f224, type: 2}
+    dropChance: 12
+  - equipment: {fileID: 11400000, guid: 50c209168b23385218591180f6a84738, type: 2}
+    dropChance: 5
+  - equipment: {fileID: 11400000, guid: f55f8b072ea2c63ac8494a2e2a87e28a, type: 2}
+    dropChance: 5
+  - equipment: {fileID: 11400000, guid: 49d2917f95ac7164aaab3db4cb0a6aae, type: 2}
+    dropChance: 5
+  - equipment: {fileID: 11400000, guid: bfdb70deaeb8cdf5b99ac4791c2f1fb0, type: 2}
+    dropChance: 4
+  - equipment: {fileID: 11400000, guid: c3a45c20937a2d2ebb542f0cb6b2852d, type: 2}
+    dropChance: 4
+  - equipment: {fileID: 11400000, guid: 8e00df07bf45d5e9ebc253d793caa754, type: 2}
+    dropChance: 2
+  - equipment: {fileID: 11400000, guid: 6ade3f4bdb755cc38b4c1a2bfea1ba82, type: 2}
+    dropChance: 1
+  - equipment: {fileID: 11400000, guid: 6701ded3fafd587569fc5006369f29ea, type: 2}
+    dropChance: 2
+  - equipment: {fileID: 11400000, guid: da1a8cc7597d9b06d9f2848633101efb, type: 2}
+    dropChance: 1
+  - equipment: {fileID: 11400000, guid: 32ca2128ffbaa44938313e35927a5b70, type: 2}
+    dropChance: 1
+  - equipment: {fileID: 11400000, guid: 29a10a63974da7c338dc17dde095208b, type: 2}
+    dropChance: 1
+  - equipment: {fileID: 11400000, guid: abb1d222aff5a8e05ab1cb43ac7737f5, type: 2}
+    dropChance: 1
+  - equipment: {fileID: 11400000, guid: bf33b69e6b457a08ebcd76aab504319d, type: 2}
+    dropChance: 1
+  alwaysDropConsumable: 1
+  consumableDropChance: 80
+  guaranteedDropPool: []

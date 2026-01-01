@@ -16,6 +16,9 @@ namespace LooterShooter.Player
         [Header("Backpack Settings")]
         [SerializeField] private int backpackCapacity = 20;
 
+        [Header("Starter Equipment")]
+        [SerializeField] private EquipmentData[] starterEquipment;
+
         // Equipped items by slot
         private Dictionary<EquipmentSlotType, EquipmentInstance> _equippedItems = new();
 
@@ -47,6 +50,22 @@ namespace LooterShooter.Player
                 return;
             }
             Instance = this;
+
+            EquipStarterItems();
+        }
+
+        private void EquipStarterItems()
+        {
+            if (starterEquipment == null) return;
+
+            foreach (var data in starterEquipment)
+            {
+                if (data != null)
+                {
+                    var instance = new EquipmentInstance(data);
+                    Equip(instance);
+                }
+            }
         }
 
         #region IItemStorage Implementation

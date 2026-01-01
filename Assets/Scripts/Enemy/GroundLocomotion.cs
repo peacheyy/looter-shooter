@@ -1,84 +1,74 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace LooterShooter.Enemy
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public class GroundLocomotion : MonoBehaviour, ILocomotion
     {
         [SerializeField] private float speed = 4f;
         [SerializeField] private float stoppingDistance = 0.5f;
 
-        private Vector3? _destination;
+        private NavMeshAgent _agent;
         private Transform _target;
 
-        public bool HasArrived { get; private set; }
-        public bool IsMoving => _destination.HasValue || _target != null;
+        public bool HasArrived => !_agent.pathPending && _agent.remainingDistance <= _agent.stoppingDistance;
+        public bool IsMoving => _agent.hasPath && _agent.remainingDistance > _agent.stoppingDistance;
 
         public float Speed
         {
             get => speed;
-            set => speed = value;
+            set
+            {
+                speed = value;
+                if (_agent != null) _agent.speed = value;
+            }
         }
 
         public float StoppingDistance
         {
             get => stoppingDistance;
-            set => stoppingDistance = value;
+            set
+            {
+                stoppingDistance = value;
+                if (_agent != null) _agent.stoppingDistance = value;
+            }
+        }
+
+        private void Awake()
+        {
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.speed = speed;
+            _agent.stoppingDistance = stoppingDistance;
         }
 
         public void SetDestination(Vector3 destination)
         {
-            _destination = destination;
             _target = null;
-            HasArrived = false;
+            _agent.SetDestination(destination);
         }
 
         public void SetTarget(Transform target)
         {
             _target = target;
-            _destination = null;
-            HasArrived = false;
+            if (_target != null)
+            {
+                _agent.SetDestination(_target.position);
+            }
         }
 
         public void Stop()
         {
-            _destination = null;
             _target = null;
-            HasArrived = true;
+            _agent.ResetPath();
         }
 
         private void Update()
         {
-            if (HasArrived) return;
-
-            Vector3 targetPos;
-
             if (_target != null)
             {
-                targetPos = _target.position;
+                _agent.SetDestination(_target.position);
             }
-            else if (_destination.HasValue)
-            {
-                targetPos = _destination.Value;
-            }
-            else
-            {
-                return;
-            }
-
-            Vector3 direction = targetPos - transform.position;
-            direction.y = 0;
-            float distance = direction.magnitude;
-
-            if (distance <= stoppingDistance)
-            {
-                HasArrived = true;
-                _destination = null;
-                return;
-            }
-
-            Vector3 normalizedDir = direction.normalized;
-            transform.position += normalizedDir * speed * Time.deltaTime;
-            transform.rotation = Quaternion.LookRotation(normalizedDir);
         }
     }
 }

@@ -6,6 +6,7 @@ namespace LooterShooter.Enemy
     public class Enemy : MonoBehaviour, IDamageable
     {
         [SerializeField] private float maxHealth = 50f;
+        [SerializeField] private LootTable lootTable;
 
         private float _currentHealth;
         private Renderer _renderer;
@@ -56,7 +57,12 @@ namespace LooterShooter.Enemy
         private void Die()
         {
             Debug.Log($"{gameObject.name} died!");
-            Item.Item.SpawnAt(transform.position);
+
+            if (lootTable != null)
+                lootTable.DropLoot(transform.position);
+            else
+                Item.Item.SpawnAt(transform.position);
+
             Destroy(gameObject);
         }
     }
