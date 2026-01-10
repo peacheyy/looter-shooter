@@ -10,6 +10,7 @@ namespace LooterShooter.Weapons
         private float _maxDistance;
         private float _distanceTraveled;
         private Vector3 _lastPosition;
+        private bool _isPooled;
 
         public void Initialize(Vector3 direction, float speed, float damage, float maxDistance)
         {
@@ -17,7 +18,9 @@ namespace LooterShooter.Weapons
             _speed = speed;
             _damage = damage;
             _maxDistance = maxDistance;
+            _distanceTraveled = 0f;
             _lastPosition = transform.position;
+            _isPooled = ProjectilePool.Instance != null;
         }
 
         private void Update()
@@ -36,7 +39,7 @@ namespace LooterShooter.Weapons
 
             if (_distanceTraveled >= _maxDistance)
             {
-                Destroy(gameObject);
+                ReturnToPool();
             }
 
             _lastPosition = transform.position;
@@ -48,7 +51,28 @@ namespace LooterShooter.Weapons
             damageable?.TakeDamage(_damage);
 
             Debug.Log($"Projectile hit: {hit.collider.name}");
-            Destroy(gameObject);
+            ReturnToPool();
+        }
+
+        private void ReturnToPool()
+        {
+            if (_isPooled && ProjectilePool.Instance != null)
+            {
+                ProjectilePool.Instance.Release(this);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnDisable()
+        {
+            _distanceTraveled = 0f;
+            _direction = Vector3.zero;
+            _speed = 0f;
+            _damage = 0f;
+            _maxDistance = 0f;
         }
     }
 }

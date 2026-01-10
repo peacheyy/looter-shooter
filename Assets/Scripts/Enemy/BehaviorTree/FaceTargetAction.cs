@@ -2,6 +2,8 @@ using System;
 using Unity.Behavior;
 using UnityEngine;
 using Unity.Properties;
+using LooterShooter;
+using LooterShooter.Enemy;
 using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
@@ -12,12 +14,25 @@ public partial class FaceTargetAction : Action
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
 
     private Transform _agentTransform;
+    private StrafingLocomotion _strafingLocomotion;
 
     protected override Status OnStart()
     {
         if (Agent.Value == null) return Status.Failure;
 
         _agentTransform = Agent.Value.transform;
+        _strafingLocomotion = Agent.Value.GetComponent<StrafingLocomotion>();
+
+        if (_strafingLocomotion != null)
+        {
+            var playerRef = PlayerReference.Instance;
+            if (playerRef != null && playerRef.Transform != null)
+            {
+                _strafingLocomotion.SetLookTarget(playerRef.Transform);
+                return Status.Success;
+            }
+        }
+
         return Status.Running;
     }
 
